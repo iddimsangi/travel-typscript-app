@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import { Head } from "./components/Head";
 import Header from "./components/Header";
@@ -10,7 +10,7 @@ export interface ItemTypes {
   items_number: number;
 }
 function App() {
-  const [items, setItems] = useState<ItemTypes[]>([]);
+  const [items, setItems] = useState<ItemTypes[]>(() => JSON.parse(localStorage.getItem("items") || ""));
   const [sortedItemsKeyWord, setSortedItemsKeyWord] = useState<string>("");
 
   let renderedItems: ItemTypes[] = items;
@@ -21,14 +21,12 @@ function App() {
     renderedItems = items
       .slice()
       .sort((a, b) => a.item_name.localeCompare(b.item_name));
-    console.log("renderedItems::>>descriptions", renderedItems);
   }
 
   if (sortedItemsKeyWord === "packed status") {
     renderedItems = items
       .slice()
       .sort((a, b) => Number(a.isPacked) - Number(b.isPacked));
-    console.log("renderedItems::>>isPacked", renderedItems);
   }
 
   const addItemHandler = (newItem: ItemTypes) => {
@@ -47,7 +45,16 @@ function App() {
   };
 
   const clearItemsHandler = () => setItems([]);
+useEffect(() => {
+  localStorage.setItem("items", JSON.stringify(items))
+},[items]);
 
+// useEffect(() => {
+//   const myItems = JSON.parse(localStorage.getItem("items") || "");
+//   if (myItems) {
+//     setItems(myItems)
+//   }
+// },[])
   return (
     <div className=" h-screen flex justify-center items-center bg-yellow-500">
       <div className=" p-4 w-1/2 flex flex-col shadow-lg bg-slate-50">
