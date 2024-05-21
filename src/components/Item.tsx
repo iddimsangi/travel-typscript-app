@@ -12,7 +12,7 @@ function Item({item, packingChecker, deleteItemHandler}:Props) {
     <input
       type="checkbox"
       checked={isPacked}
-      onClick={() => packingChecker(id)}
+      onChange={() => packingChecker(id)}
       className="p-4 bg-white focus:outline-none"
     />
     <h3 className={`text-white ${isPacked ? "line-through":""}`}>{`${items_number} ${item_name}`}</h3>
