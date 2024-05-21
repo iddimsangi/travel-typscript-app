@@ -11,6 +11,7 @@ function Item({item, packingChecker, deleteItemHandler}:Props) {
     <div className=" flex items-center space-x-2">
     <input
       type="checkbox"
+      checked={isPacked}
       onClick={() => packingChecker(id)}
       className="p-4 bg-white focus:outline-none"
     />
