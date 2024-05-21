@@ -11,6 +11,17 @@ export interface ItemTypes{
 }
 function App() {
   const[items, setItems] = useState<ItemTypes[]>([]);
+  const[sortedItemsKeyWord, setSortedItemsKeyWord] = useState<string>("");
+
+  let renderedItems;
+
+  if(sortedItemsKeyWord === "orders") renderedItems = items;
+
+  if(sortedItemsKeyWord === "descriptions") {
+    // renderedItems = items.slice().sort((a, b) => a.localeCompare(b));
+    // console.log("renderedItems::>>", renderedItems);
+    
+  }
 
   const addItemHandler = (newItem:ItemTypes) => {
     setItems((items) => [newItem, ...items]);
@@ -26,12 +37,13 @@ const deleteItemHandler = (itemId:string | number) => {
 }
 
 const clearItemsHandler = () => setItems([]);
+
   return (
     <div className=" h-screen flex justify-center items-center bg-yellow-500">
       <div className=" p-4 w-1/2 flex flex-col shadow-lg bg-slate-50">
        <Head/>
         <Header addItemHandler={addItemHandler}/>
-        <Main items={items} clearItemsHandler={clearItemsHandler} deleteItemHandler={deleteItemHandler} packingChecker={packingChecker}/>
+        <Main sortedItemsKeyWord={sortedItemsKeyWord} setSortedItemsKeyWord={setSortedItemsKeyWord} items={items} clearItemsHandler={clearItemsHandler} deleteItemHandler={deleteItemHandler} packingChecker={packingChecker}/>
         <Footer items={items}/>
       </div>
     </div>

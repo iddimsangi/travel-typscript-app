@@ -8,7 +8,7 @@ const Header = ({ addItemHandler }: PropsTypes) => {
   const [itemNumber, setItemNumber] = useState<number>(1);
   const [item, setItem] = useState<string>("");
   const submitHandler = () => {
-    
+    if(item === "") return;
     const newInputItem: ItemTypes = {
       id: crypto.randomUUID(),
       item_name: item,
@@ -21,7 +21,7 @@ const Header = ({ addItemHandler }: PropsTypes) => {
   };
   return (
     <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 justify-between p-3 bg-orange-600  items-center">
-      <h2>What do you need for your {"emoji"} trip?</h2>
+      <h2>What do you need for your 😆 trip?</h2>
       <select
         className="px-4 py-3 rounded-lg"
         value={itemNumber}
@@ -37,6 +37,7 @@ const Header = ({ addItemHandler }: PropsTypes) => {
         onChange={(e) => setItem(e.target.value)}
         value={item}
         className=" px-4 py-2 border-2 focus:outline-none rounded-lg w-80 bg-slate-300"
+        required
       />
       <Button bgColor="bg-blue-300" onClickHandler={submitHandler}>
         Add
